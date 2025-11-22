@@ -109,8 +109,6 @@ class UpdateBackupTaskForm extends Component
         $this->remoteServers = $this->backupType === BackupTask::TYPE_FILES
             ? $user->remoteServers
             : $user->remoteServers->where('database_password', '!=', null);
-
-        $this->remoteServerId = $this->remoteServers->first()?->id;
     }
 
     public function submit(): RedirectResponse|Redirector
@@ -176,7 +174,7 @@ class UpdateBackupTaskForm extends Component
             'appended_file_name' => 'appendedFileName',
             'store_path' => 'storePath',
             'excluded_database_tables' => 'excludedDatabaseTables',
-            'encryption_password' => null,
+            'encryption_password' => 'encryptionPassword',
         ];
 
         foreach ($attributeMap as $modelAttribute => $formProperty) {
