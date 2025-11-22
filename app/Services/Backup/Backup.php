@@ -610,7 +610,7 @@ abstract class Backup
         if ($databaseType === BackupConstants::DATABASE_TYPE_MYSQL) {
             // For MySQL, verify file contains SQL syntax
             $verifyCommand = sprintf(
-                'head -n 20 %s | grep -E "CREATE|INSERT|DROP" > /dev/null && echo "1" || echo "0"',
+                'head -n 120 %s | grep -E "CREATE|INSERT|DROP" > /dev/null && echo "1" || echo "0"',
                 escapeshellarg($tempOutputPath)
             );
         } else {
