@@ -141,7 +141,9 @@ class S3 implements BackupDestinationInterface
     public function writeStreamToS3(Filesystem $filesystem, string $fullPath, $stream): void
     {
         $filesystem->writeStream($fullPath, $stream);
-        fclose($stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
         Log::debug('Stream written to S3.', ['file_name' => $fullPath]);
     }
 
