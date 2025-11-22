@@ -230,6 +230,14 @@ abstract class AbstractBackupTask extends Backup
      */
     protected function setFileEncryption(SFTPInterface $sftp, string $remoteFilePath): void
     {
+        $encryptionPassword = $this->backupTask->getAttribute('encryption_password');
+        if ($encryptionPassword === null || $encryptionPassword === '') {
+            $this->logMessage('Encrypting backup file ignored.');
+            $this->measureRemoteFileSize($sftp, $remoteFilePath);
+
+            return;
+        }
+
         $this->ensureEncryptionPassword();
         $this->ensureOpensslCommandExists($sftp);
 
