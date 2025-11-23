@@ -39,8 +39,8 @@ class CreateRemoteServerForm extends Component
     /** @var string Username for the remote server connection */
     public string $username = '';
 
-    /** @var int Port number for the remote server connection */
-    public int $port = 22;
+    /** @var int|null Port number for the remote server connection if tunnel ssh */
+    public ?int $port = null;
 
     /** @var string Stores any connection error messages */
     public string $connectionError = '';
@@ -51,6 +51,8 @@ class CreateRemoteServerForm extends Component
     /** @var string|null Optional database password for the remote server */
     public ?string $databasePassword = '';
 
+    public bool $useTunnelSSH = false;
+
     /**
      * Handle form submission.
      *
@@ -58,13 +60,18 @@ class CreateRemoteServerForm extends Component
      */
     public function submit(): void
     {
-        $this->validate([
+        $validateParams = [
             'label' => ['required', 'string'],
             'host' => ['required', 'string', 'unique:remote_servers,ip_address', 'ip'],
-            'username' => ['required', 'string'],
-            'port' => ['required', 'integer', 'min:1', 'max:65535'],
+            'username' => ['string', 'nullable'],
+            'port' => ['integer', 'min:1', 'max:65535', 'nullable'],
             'databasePassword' => ['string', 'nullable'],
-        ], [
+        ];
+        if ($this->useTunnelSSH) {
+            $validateParams['username'] = ['required', 'string'];
+            $validateParams['port'] = ['required', 'integer', 'min:1', 'max:65535'];
+        }
+        $this->validate($validateParams, [
             'host.required' => __('Please enter the IP address of your remote server.'),
             'host.unique' => __('This remote server has already been added.'),
             'host.ip' => __('The IP address must be a valid IP address.'),
@@ -145,6 +152,9 @@ class CreateRemoteServerForm extends Component
      */
     private function connectionAttempt(): bool
     {
+        if (empty($this->port) || empty($this->username)) {
+            return true;
+        }
         $checkRemoteServerConnection = new CheckRemoteServerConnection;
 
         $response = $checkRemoteServerConnection->byRemoteServerConnectionDetails([

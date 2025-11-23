@@ -37,7 +37,7 @@
                 {{ __('Backup Configuration') }}
             </x-form-section>
             <div class="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
-                <div class="w-full sm:w-3/6">
+                <div class="w-full sm:w-4">
                     <x-input-label for="remoteServerId" :value="__('Remote Server')" />
                     <x-select
                         id="remoteServerId"
@@ -56,17 +56,6 @@
                     <x-input-explain>
                         {{ __('Choose the remote server from which you want to create a backup. Remember, if you plan to perform database backups on any remote server, you must set a database password for it.') }}
                     </x-input-explain>
-                </div>
-                <div class="w-full sm:w-3/6">
-                    <x-input-label for="backupType" :value="__('Backup Type')" />
-                    <x-select id="backupType" class="mt-1 block w-full" wire:model.live="backupType" name="backupType">
-                        @foreach ($backupTypes as $type => $label)
-                            <option value="{{ $type }}">
-                                {{ ucfirst($label) }}
-                            </option>
-                        @endforeach
-                    </x-select>
-                    <x-input-error :messages="$errors->get('backupType')" class="mt-2" />
                 </div>
             </div>
             <div class="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
@@ -105,6 +94,19 @@
                     <x-input-explain>
                         {{ __('Set the maximum limit for stored backups. Any backups exceeding this limit will be removed, starting with the oldest. Enter 0 to disable and store all backups.') }}
                     </x-input-explain>
+                </div>
+            </div>
+            <div class="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
+                <div class="w-full sm:w-4">
+                    <x-input-label for="backupType" :value="__('Backup Type')" />
+                    <x-select id="backupType" class="mt-1 block w-full" wire:model.live="backupType" name="backupType">
+                        @foreach ($backupTypes as $type => $label)
+                            <option value="{{ $type }}">
+                                {{ ucfirst($label) }}
+                            </option>
+                        @endforeach
+                    </x-select>
+                    <x-input-error :messages="$errors->get('backupType')" class="mt-2" />
                 </div>
             </div>
             @if ($backupType === \App\Models\BackupTask::TYPE_FILES)

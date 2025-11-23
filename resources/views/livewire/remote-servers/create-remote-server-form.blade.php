@@ -118,6 +118,15 @@
                         </div>
 
                         <div class="sm:col-span-3">
+                            <label class="flex items-center">
+                                <input id="tunnelSSH" type="checkbox" wire:model.live="useTunnelSSH" class="mr-2" />
+{{--                                    <x-input-label for="tunnelSSH" :value="__('Host')"/>--}}
+                                <span class="text-gray-700">"__('Host')"</span>
+                            </label>
+                        </div>
+
+                        @if($useTunnelSSH)
+                        <div class="sm:col-span-3">
                             <x-input-label for="port" :value="__('SSH Port')"/>
                             <x-text-input
                                 id="port"
@@ -141,6 +150,7 @@
                             />
                             <x-input-error :messages="$errors->get('username')" class="mt-2"/>
                         </div>
+                        @endif
 
                         <div class="sm:col-span-6" x-data="{ show: false }">
                             <x-input-label for="databasePassword" :value="__('Database Password')"/>
