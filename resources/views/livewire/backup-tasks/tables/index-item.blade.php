@@ -393,7 +393,7 @@
                                 x-on:click.prevent="$dispatch('open-modal', 'view-script-output-{{ $script->id }}')"
                                 class="inline-flex items-center rounded-md bg-white px-2.5 py-0.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-700"
                             >
-                                @svg('hugeicons-terminal', 'mr-1 h-3 w-3')
+                                @svg('hugeicons-command-line', 'mr-1 h-3 w-3')
                                 {{ __('View Output') }}
                             </button>
                         </div>
@@ -412,7 +412,7 @@
                     <x-slot name="description">
                         {{ __('Output from the last execution of this script.') }}
                     </x-slot>
-                    <x-slot name="icon">hugeicons-terminal</x-slot>
+                    <x-slot name="icon">hugeicons-command-line</x-slot>
                     <div class="max-h-96 overflow-y-auto">
                         <div class="overflow-hidden bg-gray-900 shadow sm:rounded-lg">
                             <div class="p-4">
