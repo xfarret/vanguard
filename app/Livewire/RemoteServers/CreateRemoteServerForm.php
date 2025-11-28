@@ -152,7 +152,7 @@ class CreateRemoteServerForm extends Component
      */
     private function connectionAttempt(): bool
     {
-        if (empty($this->port) || empty($this->username)) {
+        if ($this->port === null || $this->port === 0 || ($this->username === '' || $this->username === '0')) {
             return true;
         }
         $checkRemoteServerConnection = new CheckRemoteServerConnection;
