@@ -124,7 +124,7 @@
                             {{ __('Version :version', ['version' => obtain_vanguard_version()]) }}
                             <a
                                 target="_blank"
-                                href="https://github.com/vanguardbackup/vanguard/releases/tag/{{ obtain_vanguard_version() }}"
+                                href="https://github.com/xfarret/vanguard/releases/tag/{{ obtain_vanguard_version() }}"
                             >
                                 @svg('hugeicons-link-square-02', ['class' => 'mr-2.5 inline h-3.5 w-3.5 dark:text-gray-300'])
                             </a>
