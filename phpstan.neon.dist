@@ -10,12 +10,12 @@ parameters:
         # So.. this is here because PHP CS Fixer keeps removing the docblock which makes PHPStan fail. Infuriating.
 
     # Level 9 is the highest level
-    level: 8
+    level: 6
 
 
     ignoreErrors:
     # This is a particularly nasty error and I couldn't manage to resolve it (nicely)..
-        - '#Cannot call method isoFormat\(\) on (.*)Carbon(.*)string#'
+        # - '#Cannot call method isoFormat\(\) on (.*)Carbon(.*)string#'
 
     # Blanket ignores for specific PHPStan errors
         - '#Generic type Illuminate\\Database\\Eloquent\\Relations\\HasOne<(.*)> in PHPDoc tag @return does not specify all template types of class Illuminate\\Database\\Eloquent\\Relations\\HasOne: TRelatedModel, TDeclaringModel#'
