@@ -70,6 +70,9 @@ Route::middleware([UserLanguage::class, 'auth', 'two-factor', 'account-disabled'
     Route::prefix('scripts')->group(function () {
         Route::get('/', \App\Livewire\Scripts\Index::class)->name('scripts.index');
         Route::get('create', \App\Livewire\Scripts\Create::class)->name('scripts.create');
+        Route::get('edit/{script}', \App\Http\Controllers\Scripts\EditController::class)
+            ->name('scripts.edit')
+            ->middleware('can:update,script');
     });
 
     Route::prefix('notification-streams')->group(function () {

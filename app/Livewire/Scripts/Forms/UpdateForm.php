@@ -14,19 +14,24 @@ use Livewire\Features\SupportRedirects\Redirector;
  *
  * This component handles the form submission and validation for creating a new script.
  */
-class CreateForm extends AbstractScriptForm
+class UpdateForm extends AbstractScriptForm
 {
+    public Script $scriptObject;
+
     /**
      * Initialize the component state.
      */
-    public function mount(): void
+    public function mount(Script $script): void
     {
-        $this->type = Script::TYPE_PRESCRIPT;
+        $this->scriptObject = $script;
+        $this->label = $script->getAttribute('label');
+        $this->script = $script->getAttribute('script');
+        $this->type = $script->getAttribute('type');
 
         $backupTasksProperty = $this->getBackupTasksProperty();
 
         // Initialize selectedTasks with empty array if no backup tasks exist
-        if ($backupTasksProperty->isEmpty()) {
+        if ($this->scriptObject->getAttribute('backupTasks')->isEmpty()) {
             $this->selectedTasks = [];
         } else {
             $this->selectedTasks = array_fill_keys(
@@ -35,7 +40,12 @@ class CreateForm extends AbstractScriptForm
             );
         }
 
-        $this->loadExistingAssociations();
+        $backupTaskRelationIds = $this->scriptObject->backupTasks()->pluck('id')->toArray();
+        if (! empty($backupTaskRelationIds)) {
+            foreach ($backupTaskRelationIds as $backupTaskRelationId) {
+                $this->selectedTasks[$backupTaskRelationId] = true;
+            }
+        }
     }
 
     /**
@@ -45,7 +55,12 @@ class CreateForm extends AbstractScriptForm
      */
     public function submit(): RedirectResponse|Redirector
     {
-        return $this->submitForm();
+        $backupTasks = $backupTaskRelationIds = $this->scriptObject->backupTasks()->get();
+        foreach ($backupTasks as $backupTask) {
+            $backupTask->scripts()->detach($this->scriptObject->getAttribute('id'));
+        }
+
+        return $this->submitForm($this->scriptObject);
     }
 
     /**
@@ -53,9 +68,6 @@ class CreateForm extends AbstractScriptForm
      */
     public function render(): View
     {
-        return view('livewire.scripts.forms.create-script', [
-            'backupTasks' => $this->getBackupTasksProperty(),
-            'existingAssociations' => $this->existingAssociations,
-        ]);
+        return view('livewire.scripts.forms.update-script');
     }
 }

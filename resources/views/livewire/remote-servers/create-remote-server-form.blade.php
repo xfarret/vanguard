@@ -125,7 +125,7 @@
                             </label>
                         </div>
 
-                        @if($useTunnelSSH)
+                        @if ($useTunnelSSH)
                         <div class="sm:col-span-3">
                             <x-input-label for="port" :value="__('SSH Port')"/>
                             <x-text-input

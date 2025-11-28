@@ -52,6 +52,14 @@
                 </span>
                 <x-hugeicons-eye class="h-4 w-4" />
             </x-secondary-button>
+            <div class="col-span-12 mt-4 flex justify-start space-x-2 sm:col-span-3 sm:mt-0 sm:justify-center">
+                <a href="{{ route('scripts.edit', $script) }}" wire:navigate>
+                    <x-secondary-button iconOnly>
+                        <span class="sr-only">{{ __('Update Script') }}</span>
+                        <x-hugeicons-task-edit-01 class="h-4 w-4" />
+                    </x-secondary-button>
+                </a>
+            </div>
             @livewire('scripts.delete-script-button', ['script' => $script])
         </div>
     </x-table.table-row>

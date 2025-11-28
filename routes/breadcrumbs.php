@@ -88,6 +88,11 @@ Breadcrumbs::for('scripts.create', function (BreadcrumbTrail $trail) {
     $trail->push(__('Create Script'), route('scripts.create'));
 });
 
+Breadcrumbs::for('scripts.edit', function (BreadcrumbTrail $trail, $script) {
+    $trail->parent('scripts.index');
+    $trail->push(__('Update Script'), route('scripts.edit', $script));
+});
+
 Breadcrumbs::for('notification-streams.index', function (BreadcrumbTrail $trail) {
     $trail->parent('profile');
     $trail->push(__('Notification Streams'), route('notification-streams.index'));

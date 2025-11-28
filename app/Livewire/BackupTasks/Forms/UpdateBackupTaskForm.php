@@ -219,6 +219,13 @@ class UpdateBackupTaskForm extends Component
      */
     private function rules(): array
     {
+        $cronRegex = '/^(\*|(\*\/)?([0-5]?[0-9])([-,]([0-5]?[0-9]))*)' // minute
+            . '\s+(\*|(\*\/)?([0-1]?[0-9]|2[0-3])([-,]([0-1]?[0-9]|2[0-3]))*)' // hour
+            . '\s+(\*|(\*\/)?([1-2]?[0-9]|3[0-1])([-,]([1-2]?[0-9]|3[0-1]))*)' // day of month
+            . '\s+(\*|(\*\/)?([1-9]|1[0-2])([-,]([1-9]|1[0-2]))*)' // month
+            . '\s+(\*|(\*\/)?([0-7])([-,]([0-7]))*)'  // day of week
+            . '$/';
+
         $baseRules = [
             'encryptionPassword' => ['nullable', 'string'],
             'selectedStreams' => ['nullable', 'array', Rule::exists('notification_streams', 'id')->where('user_id', Auth::id())],
@@ -243,7 +250,7 @@ class UpdateBackupTaskForm extends Component
             'cronExpression' => [
                 'nullable',
                 'string',
-                'regex:/^(\*|([0-5]?\d)) (\*|([01]?\d|2[0-3])) (\*|([0-2]?\d|3[01])) (\*|([1-9]|1[0-2])) (\*|([0-7]))$/',
+                'regex:' . $cronRegex,
                 'required_if:useCustomCron,true',
             ],
         ];
