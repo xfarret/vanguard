@@ -43,6 +43,15 @@ jobs:
 
       - name: Prepare Laravel Application
         run: |
+          # Create necessary cache directories
+          mkdir -p storage/framework/views
+          mkdir -p storage/framework/cache
+          mkdir -p storage/framework/sessions
+          mkdir -p bootstrap/cache
+
+          # Set proper permissions
+          chmod -R 775 storage bootstrap/cache
+
           cp .env.example.ci .env
           php artisan key:generate
           php artisan vanguard:generate-ssh-key
