@@ -38,6 +38,9 @@ jobs:
       - name: Prepare Laravel Application
         run: |
           cp .env.example.ci .env
+          mkdir -p storage/framework/{cache,data,sessions,testing,views}
+          mkdir -p bootstrap/cache
+          chmod -R 777 storage bootstrap/cache
           php artisan key:generate
 
       - name: Cache Laravel application
