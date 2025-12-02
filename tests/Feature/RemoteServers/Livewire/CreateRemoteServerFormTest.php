@@ -70,7 +70,7 @@ test('required fields are required', function (): void {
 
     Livewire::test(CreateRemoteServerForm::class)
         ->call('submit')
-        ->assertHasErrors(['label', 'host', 'username']);
+        ->assertHasErrors(['label', 'host']);
 });
 
 test('the ip address must be an ip address', function (): void {

@@ -37,9 +37,12 @@ test('a remote server can be deleted by its creator', function (): void {
 test('a remote server cannot be deleted by another user', function (): void {
     Queue::fake();
     $user = User::factory()->create();
-    $remoteServer = RemoteServer::factory()->create();
+    $remoteServer = RemoteServer::factory()->create([
+        'user_id' => $user->id,
+    ]);
 
-    $this->actingAs($user);
+    $anotherUser = User::factory()->create();
+    $this->actingAs($anotherUser);
 
     Livewire::test(DeleteRemoteServerForm::class, ['remoteServer' => $remoteServer])
         ->call('delete')
@@ -49,5 +52,5 @@ test('a remote server cannot be deleted by another user', function (): void {
     Queue::assertNotPushed(RemoveServerJob::class);
 
     $this->assertDatabaseHas('remote_servers', ['id' => $remoteServer->id]);
-    $this->assertAuthenticatedAs($user);
+    $this->assertAuthenticatedAs($anotherUser);
 });

@@ -61,10 +61,10 @@ class AbstractScriptForm extends Component
     /**
      * When script type changes, refresh the existing associations warning.
      */
-    protected function updatedType(): void
-    {
-        $this->loadExistingAssociations();
-    }
+    //    protected function updatedType(): void
+    //    {
+    //        $this->loadExistingAssociations();
+    //    }
 
     /**
      * Load existing script associations for backup tasks.

@@ -11,7 +11,7 @@
 .phpactor.json
 .phpunit.result.cache
 Homestead.json
-Homestead.yaml
+Homestead.veyaml
 auth.json
 npm-debug.log
 yarn-error.log
@@ -19,4 +19,6 @@ yarn-error.log
 /.idea
 /.vscode
 bump_version.log
+/storage/**/*.gitignore
+/storage
 /storage/rector/cache
